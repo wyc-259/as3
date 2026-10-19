@@ -1,0 +1,34 @@
+package com.example.as3
+
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
+
+class AnimalAdapter(
+    private val data: List<Animal>,
+    private val onClick: (Animal) -> Unit
+) : RecyclerView.Adapter<AnimalAdapter.AnimalViewHolder>() {
+
+    class AnimalViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val ivAnimal: ImageView = itemView.findViewById(R.id.iv_animal)
+        val tvName: TextView = itemView.findViewById(R.id.tv_name)
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AnimalViewHolder {
+        val view = LayoutInflater.from(parent.context)
+            .inflate(R.layout.item_recyclerview, parent, false)
+        return AnimalViewHolder(view)
+    }
+
+    override fun onBindViewHolder(holder: AnimalViewHolder, position: Int) {
+        val animal = data[position]
+        holder.ivAnimal.setImageResource(animal.imageRes)
+        holder.tvName.text = animal.name
+        holder.itemView.setOnClickListener { onClick(animal) }
+    }
+
+    override fun getItemCount(): Int = data.size
+}
